@@ -1,0 +1,12 @@
+@if(ViewData["PesanError"] !=  null)
+{
+    <div class="row">
+    @Html.Raw(ViewData["PesanError"])
+    </div>
+}
+else
+{
+    <div>
+        <span class="alert alert-danger">Data tidak ditemukan</span>
+    </div>
+}

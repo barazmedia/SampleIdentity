@@ -1,0 +1,58 @@
+@model SampleIdentity.Models.EditRoleViewModel
+@{
+    ViewData["Title"]="Edit Role";
+}
+<h2>Edit Role</h2>
+<div class="row">
+@if(ViewData["pesan"] != null)
+{
+    @Html.Raw(ViewData["pesan"]);
+}
+</div>
+<form asp-action="EditRole" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="mb-3 mt-3">
+        <label asp-for="Id"></label>
+        <input asp-for="Id" class="form-control" disabled/>
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3 mt-3">
+        <label asp-for="RoleName"></label>
+        <input asp-for="RoleName" class="form-control"/>
+        <span asp-validation-for="RoleName" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Role</button>
+</form>
+
+@if(Model.Users.Any())
+{
+<div class="row">
+    <h2>List of User</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Username</th>
+        </tr>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>@item</td>
+            </tr>
+        }
+    </table>
+</div>
+<a class="btn btn-primary" asp-action="EditUsersInRole" asp-route-roleId="@Model.Id" >Add/Remove User</a>
+}
+
+else
+{
+    <div class="row">
+    <p>Belum ada user dalam Role <a asp-action="EditUsersInRole" asp-route-roleId="@Model.Id" >Add User</a></p>
+    </div>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+}
